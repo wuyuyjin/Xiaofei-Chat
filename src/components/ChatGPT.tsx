@@ -28,8 +28,6 @@ const ChatGPT = ({message}: { message: string }) => {
     return () => clearInterval(interval);
   }, [index]); // 当index变化时重新执行效果
 
-  console.log("outputString:" + outputString)
-
   return (
     <div className="chat chat-start">
       <div className="chat-image avatar">

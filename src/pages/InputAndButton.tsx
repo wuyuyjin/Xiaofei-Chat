@@ -1,34 +1,47 @@
-import {useState} from "react";
-import {IconBrandTelegram} from "@tabler/icons-react";
+import {IconBrandTelegram, IconMicrophone, IconPhoto, IconPlus} from "@tabler/icons-react";
 import Message from "../components/message";
-import InputAndButtonMethod from "../server/InputAndButtonMethod.tsx";
+import ChatMethod from "../server/ChatMethod.tsx";
+import Dictaphone from "../server/RecordingMethod.tsx";
+import {useState} from "react";
 
 const InputAndButton = () => {
   const [chat, setChat] = useState("")
   const {errorEmpty} = Message()
-  const {handleSubmit} = InputAndButtonMethod()
+  const {chatMethod} = ChatMethod()
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (chat === "") {
         errorEmpty()
       } else {
-        handleSubmit(chat);
+        chatMethod(chat);
         setChat("")
       }
     }
   }
 
+  const dictaphoneMethod = (newValue: string) => {
+    setChat(newValue)
+  }
 
   return (
     <div className="flex items-stretch justify-center join">
+      <div className="dropdown dropdown-hover dropdown-top">
+        <div tabIndex={0} role="button" className="btn btn-active btn-neutral btn-lg self-end join-item"><IconPlus/>
+        </div>
+        <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-[#2A4365] rounded-box w-52">
+          <li><a><IconPhoto/>上传图片</a></li>
+          <li><a><IconMicrophone/>语音输入<Dictaphone dictaphoneMethod={dictaphoneMethod}/></a></li>
+        </ul>
+      </div>
+
       <input type="text" placeholder="Send a message"
              value={chat}
              onChange={e => setChat(e.target.value)}
              onKeyDown={handleKeyDown}
              className="input input-bordered input-lg join-item w-8/12 drop-shadow-2xl"/>
       <button className="btn btn-active btn-neutral btn-lg self-end join-item"
-              onClick={() => handleSubmit(chat)}><IconBrandTelegram/>
+              onClick={() => chatMethod(chat)}><IconBrandTelegram/>
       </button>
     </div>
   )

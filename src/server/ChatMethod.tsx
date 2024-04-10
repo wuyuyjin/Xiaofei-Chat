@@ -4,7 +4,7 @@ import {useChatStore} from "../store";
 import Message from "../components/message";
 import {useState} from "react";
 
-const InputAndButtonMethod = () => {
+const ChatMethod = () => {
   const increaseChatState = useChatStore.use.increaseChatState()
   const increaseChatGPTState = useChatStore.use.increaseChatGPTState()
   const {errorEmpty} = Message()
@@ -13,7 +13,7 @@ const InputAndButtonMethod = () => {
     {role: 'assistant', content: '我是AI助手'}
   ]);
   let result: string = '';
-  const handleSubmit = async (chat: string) => {
+  const chatMethod = async (chat: string) => {
     if (chat === "") {
       errorEmpty()
     } else {
@@ -90,11 +90,9 @@ const InputAndButtonMethod = () => {
         increaseChatGPTState(result)
         // 对话完成后socket会关闭，将聊天记录换行处理
       });
-
     }
   }
-
-  return {handleSubmit}
+  return {chatMethod}
 }
 
-export default InputAndButtonMethod
+export default ChatMethod

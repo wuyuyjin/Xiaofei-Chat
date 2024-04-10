@@ -41,6 +41,9 @@ dependencies:
   immer:
     specifier: ^10.0.2
     version: 10.0.2
+  pnpm:
+    specifier: ^8.15.6
+    version: 8.15.6
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -56,6 +59,9 @@ dependencies:
   react-router-dom:
     specifier: ^6.22.3
     version: 6.22.3(react-dom@18.2.0)(react@18.2.0)
+  react-speech-recognition:
+    specifier: ^3.10.0
+    version: 3.10.0(react@18.2.0)
   react-syntax-highlighter:
     specifier: ^15.5.0
     version: 15.5.0(react@18.2.0)
@@ -85,6 +91,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18.2.7
     version: 18.2.7
+  '@types/react-speech-recognition':
+    specifier: ^3.9.5
+    version: 3.9.5
   '@types/react-syntax-highlighter':
     specifier: ^15.5.11
     version: 15.5.11
@@ -1884,6 +1893,10 @@ packages:
       '@types/ms': 0.7.34
     dev: false
 
+  /@types/dom-speech-recognition@0.0.4:
+    resolution: {integrity: sha512-zf2GwV/G6TdaLwpLDcGTIkHnXf8JEf/viMux+khqKQKDa8/8BAUtXXZS563GnvJ4Fg0PBLGAaFf2GekEVSZ6GQ==}
+    dev: true
+
   /@types/estree-jsx@1.0.5:
     resolution: {integrity: sha512-52CcUVNFyfb1A2ALocQw/Dd1BQFNmSdkuC3BkZ6iqhdMfQz7JWOFRuJFloOzjk+6WijU56m9oKXFAXc7o3Towg==}
     dependencies:
@@ -1941,6 +1954,12 @@ packages:
     resolution: {integrity: sha512-GRaAEriuT4zp9N4p1i8BDBYmEyfo+xQ3yHjJU4eiK5NDa1RmUZG+unZABUTK4/Ox/M+GaHwb6Ow8rUITrtjszA==}
     dependencies:
       '@types/react': 18.2.15
+    dev: true
+
+  /@types/react-speech-recognition@3.9.5:
+    resolution: {integrity: sha512-m3Sg3Xtj/YcEUu+nLPGwI6oq1wcSblsuyAmXgBfW6Nprfmtl+A+kH4ruPzzFKnFkq6WmmRxdsLvt0nLRAAJtBw==}
+    dependencies:
+      '@types/dom-speech-recognition': 0.0.4
     dev: true
 
   /@types/react-syntax-highlighter@15.5.11:
@@ -3702,6 +3721,12 @@ packages:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
 
+  /pnpm@8.15.6:
+    resolution: {integrity: sha512-d7iem+d6Kwatj0A6Gcrl4il29hAj+YrTI9XDAZSVjrwC7gpq5dE+5FT2E05OjK8poF8LGg4dKxe8prah8RWfhg==}
+    engines: {node: '>=16.14'}
+    hasBin: true
+    dev: false
+
   /postcss-import@15.1.0(postcss@8.4.29):
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}
     engines: {node: '>=14.0.0'}
@@ -3941,6 +3966,14 @@ packages:
       react: '>=16.8'
     dependencies:
       '@remix-run/router': 1.15.3
+      react: 18.2.0
+    dev: false
+
+  /react-speech-recognition@3.10.0(react@18.2.0):
+    resolution: {integrity: sha512-EVSr4Ik8l9urwdPiK2r0+ADrLyDDrjB0qBRdUWO+w2MfwEBrj6NuRmy1GD3x7BU/V6/hab0pl8Lupen0zwlJyw==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
       react: 18.2.0
     dev: false
 
