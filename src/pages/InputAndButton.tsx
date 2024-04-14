@@ -7,15 +7,37 @@ import {useState} from "react";
 const InputAndButton = () => {
   const [chat, setChat] = useState("")
   const {errorEmpty} = Message()
-  const {chatMethod} = ChatMethod()
+  const {chatMethod, IllustratedText} = ChatMethod()
+
+  const [base64String, setBase64String] = useState<string>('');
+
+  //图片转换base64
+  const convertToBase64 = (file: File, callback: (base64: string) => void) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (event.target?.result) {
+        callback(event.target.result as string);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      convertToBase64(file, (base64) => setBase64String(base64));
+    }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (chat === "") {
         errorEmpty()
       } else {
-        chatMethod(chat);
+        // chatMethod(chat);
+        IllustratedText(chat,base64String)
         setChat("")
+        setBase64String("")
       }
     }
   }
@@ -30,7 +52,7 @@ const InputAndButton = () => {
         <div tabIndex={0} role="button" className="btn btn-active btn-neutral btn-lg self-end join-item"><IconPlus/>
         </div>
         <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-[#2A4365] rounded-box w-52">
-          <li><a><IconPhoto/>上传图片</a></li>
+          <li><a><IconPhoto/>上传图片<input type="file" onChange={handleImageChange}/></a></li>
           <li><a><IconMicrophone/>语音输入<Dictaphone dictaphoneMethod={dictaphoneMethod}/></a></li>
         </ul>
       </div>

@@ -62,4 +62,3 @@ const OmsViewMarkdown = (props: tProps) => {
 };
 
 export default OmsViewMarkdown;
-

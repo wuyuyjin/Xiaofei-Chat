@@ -194,8 +194,8 @@ const Dictaphone = ({dictaphoneMethod}: {dictaphoneMethod: any}) => {
       {/*<p>Microphone: {listening ? 'on' : 'off'}</p>*/}
       {/*<button onClick={startListening}>Start</button>*/}
       {/*<button onClick={SpeechRecognition.stopListening}>Stop</button>*/}
-      <button onClick={() => start()}>{listening?"stop":"start"}</button>
-      <button onClick={resetTranscript}>重新</button>
+      <button onClick={() => start()}>{listening?"暂停":"开始"}</button>
+      <button className="ml-2" onClick={resetTranscript}>重录</button>
     </div>
   );
 };
