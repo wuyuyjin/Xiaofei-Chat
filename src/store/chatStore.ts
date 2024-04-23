@@ -9,12 +9,13 @@ interface chatStoreType {
   type: boolean
   id: string
   message: string
+  image: string
 }
 
 interface chatState {
   chatStoreState: chatStoreType[]
-  increaseChatState: (message: string) => void
-  increaseChatGPTState: (message: string) => void
+  increaseChatState: (message: string,image: string) => void
+  increaseChatGPTState: (message: string,image: string) => void
   messageHttp: (message: string) => void
 }
 
@@ -22,24 +23,26 @@ const useChatStore = createSelectors(create<chatState>()(immer(devtools(persist(
 
     // true是ChatGPT
     chatStoreState: [
-      {type: true, id: "1", message: "欢迎使用小飞AI！"},
+      {type: true, id: "1", message: "欢迎使用小飞AI！",image: ""},
     ],
 
     // 用户聊天记录
-    increaseChatState: (message) => set((state) => ({
+    increaseChatState: (message,image) => set((state) => ({
       chatStoreState: [...state.chatStoreState, {
         type: false,
         id: uuid(),
-        message: message
+        message: message,
+        image: image
       }]
     })),
 
     // GPT聊天记录
-    increaseChatGPTState: (message) => set((state) => ({
+    increaseChatGPTState: (message,image) => set((state) => ({
       chatStoreState: [...state.chatStoreState, {
         type: true,
         id: uuid(),
-        message: message
+        message: message,
+        image: image
       }]
     })),
 

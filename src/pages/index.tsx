@@ -4,6 +4,8 @@ import Space from "./Space";
 import Divider from "./Divider";
 
 const ChatPage = () => {
+
+  console.log(111)
   return (
     <div className="min-h-screen bg-base-100 relative">
       <div className="flex justify-center">

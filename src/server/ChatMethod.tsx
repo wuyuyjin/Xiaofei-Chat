@@ -14,11 +14,12 @@ const ChatMethod = () => {
     {role: 'assistant', content: '我是AI助手'}
   ]);
   let result: string = '';
+  // const prefixRegex = /^data:.*?base64,/;
   const chatMethod = async (chat: string) => {
     if (chat === "") {
       errorEmpty()
     } else {
-      increaseChatState(chat)
+      increaseChatState(chat,"")
 
       let myUrl = await getChatWebsocketUrl();
       // 获取输入框中的内容
@@ -31,7 +32,7 @@ const ChatMethod = () => {
         let params = {
           header: {
             app_id: requestObj.APPID,
-            uid: 'wzz'
+            uid: 'wuyujin'
           },
           parameter: {
             chat: {
@@ -89,17 +90,21 @@ const ChatMethod = () => {
         //   increaseChatGPTState(result)
         //   setIsTrue(false)
         // }
-        increaseChatGPTState(result)
+        increaseChatGPTState(result,"")
         // 对话完成后socket会关闭，将聊天记录换行处理
       });
     }
   }
 
   const IllustratedText = async (chat: string,image: string) => {
+    // console.log("image1:"+image.replace(prefixRegex,""))
+    // const data1 = `b'${image.replace(prefixRegex,'')}'`
+    // console.log("data:"+data1)
+
     if (chat === "") {
       errorEmpty()
     } else {
-      increaseChatState(chat)
+      increaseChatState(chat,"")
 
       let myUrl = await getImageWebsocketUrl();
       // 获取输入框中的内容
@@ -172,7 +177,7 @@ const ChatMethod = () => {
         //   increaseChatGPTState(result)
         //   setIsTrue(false)
         // }
-        increaseChatGPTState(result)
+        increaseChatGPTState(result,'')
         // 对话完成后socket会关闭，将聊天记录换行处理
       });
     }

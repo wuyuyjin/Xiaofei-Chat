@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import OmsViewMarkdown from "./OmsViewMarkdown.tsx";
 
 // chatGPT的聊天内容
-const ChatGPT = ({message}: { message: string }) => {
+const ChatGPT = ({message, image}: { message: string, image: string }) => {
   const [outputString, setOutputString] = useState("");
   const [index, setIndex] = useState(0);
 
@@ -39,9 +39,17 @@ const ChatGPT = ({message}: { message: string }) => {
         <div>小飞AI</div>
         <time className="text-xs opacity-50">{getLocalTime}</time>
       </div>
-      <div className="chat-bubble min-w-{50%}  break-words">
-        <OmsViewMarkdown textContent={outputString}/>
-      </div>
+
+      {image ?
+        <div className="chat-bubble min-w-{50%} break-words">
+          <img src={image}/>
+          <OmsViewMarkdown textContent={outputString}/>
+        </div> :
+        <div className="chat-bubble min-w-{50%}  break-words">
+          <OmsViewMarkdown textContent={outputString}/>
+        </div>
+      }
+
     </div>
   )
 }
