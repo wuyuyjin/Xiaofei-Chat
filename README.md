@@ -1,27 +1,25 @@
-# React + TypeScript + Vite
+# 小飞AI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 项目背景
+***
+本项目是基于讯飞语言大模型开发的一款AI网站。
 
-Currently, two official plugins are available:
+## Getting Started
+***
+前置要求：本机安装node.js >= 18，配置[pnpm](https://pnpm.io/installation)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+如何运行程序：
 
-## Expanding the ESLint configuration
+1. 先git clone https://github.com/wuyuyjin/Xiaofei-Chat.git 下来
+2. cd 你的目录
+3. 打开该目录的终端运行```pnpm install```
+4. 然后再运行```pnpm run dev```
+5. 在chrome浏览器打开<http://localhost:5173/>即可
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 技术框架：
+***
+本项目包括的技术：
 
-- Configure the top-level `parserOptions` property like this:
+react，vite，tailwindcss，daisy UI，zustand，tabler
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+开发工具：webstorm
