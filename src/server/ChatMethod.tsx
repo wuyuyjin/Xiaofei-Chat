@@ -1,25 +1,84 @@
 import GetWebsocketUrl from "../utils/AiUtils.ts";
 import {imageObj, requestObj} from "../config";
-import {useChatStore} from "../store";
+import {useChatStore} from "../store/chatStore";
 import Message from "../components/message";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {useParams} from "react-router";
+import {JSEncrypt} from "jsencrypt";
 
 const ChatMethod = () => {
-  const {getChatWebsocketUrl,getImageWebsocketUrl} = GetWebsocketUrl()
+  const {getChatWebsocketUrl, getImageWebsocketUrl, getTestUrl} = GetWebsocketUrl()
   const increaseChatState = useChatStore.use.increaseChatState()
   const increaseChatGPTState = useChatStore.use.increaseChatGPTState()
+  // const increaseChatState = useChatTestStore.use.increaseChatState()
+  // const increaseChatGPTState = useChatTestStore.use.increaseChatGPTState()
+  const {id} = useParams()
   const {errorEmpty} = Message()
   const [historyMessage, setHistoryMessage] = useState<any[]>([
     {role: 'user', content: '你是谁'}, //# 用户的历史问题
     {role: 'assistant', content: '我是AI助手'}
   ]);
   let result: string = '';
-  // const prefixRegex = /^data:.*?base64,/;
+
+  const test = () => {
+    const userId = '6afec9c4-66ef-4dc1-94ed-99441d3484cb'; // 你随机设置的 userId
+    const publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCaC4O6xRgVS8jfe3/dPluxFrCHWLRaqgnBSAnpGjL3beSr6UjgG/VqQWqH8WItyFJhCkMzfBasFM2rqGiDJFi/lOz2lY8r+0gRnfEyQ3qEUkAKgSI1YUQ+8Ng0ff6Lx9oUScUHbFTX6/cpRF9xsWi17sD4KcWUkxqGl0Z2ApFG5wIDAQAB"
+    const JSE = new JSEncrypt()
+    JSE.setPublicKey(publicKey)
+    const date = new Date()
+    const unixDate = Math.floor(date.getTime()/1000)
+    console.log("unixDate:"+unixDate)
+    const tokenUnix = JSE.encrypt(userId)+String(unixDate)
+    console.log(tokenUnix)
+// // WebSocket地址
+//     const socketUrl = `ws://10.23.76.122:8000/ws/test/${userId}/${topicId}/${token}`;
+//
+// // 创建WebSocket对象
+//     const socket = new WebSocket(socketUrl,[token]);
+//
+// // 监听WebSocket连接打开事件
+//     socket.addEventListener('open', () => {
+//       console.log('WebSocket连接已打开');
+//
+//       let params = {
+//         headers:{
+//           Authorization: "Bearer "+"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZyIsInVzZXIiOnsiaWQiOiI2YWZlYzljNC02NmVmLTRkYzEtOTRlZC05OTQ0MWQzNDg0Y2IiLCJuaWNrbmFtZSI6bnVsbCwiYXZhdGFyIjpudWxsLCJ0eXBlcyI6Ik9SRElOQVJZIiwic3RhdHVzIjoiTk9STUFMIiwiZW1haWwiOiJsanpjb21lb25AZ21haWwuY29tIiwicGhvbmUiOm51bGwsImNyZWF0ZUF0IjoxNzE0NjM0ODQyNDkyLCJ1cGRhdGVBdCI6MTcxNDYzNDg0MjQ5MiwicGFzc3dvcmQiOiIkMmEkMTAkemg2aEJtZDZHM1dnTVpMOE5EUjZ1LnBEYmgzTUtvNDFISFpZMEhRR0Ivem5LMkprSklLWmEiLCJyZWdpc3RlclBhdHRlcm4iOiJFbWFpbCJ9LCJpYXQiOjE3MTQ2NDM2Nzh9.ylwe2Q1Fvnd05Ax5WmfaFBaFfliE4nmKk0muG3QG_Fw"
+//         }
+//       }
+//
+//       // 连接成功后发送消息
+//       socket.send(JSON.stringify(params.headers));
+//     });
+//
+// // 监听WebSocket接收到消息事件
+//     socket.addEventListener('message', (event) => {
+//       console.log('接收到消息:', event.data);
+//     });
+//
+// // 监听WebSocket连接关闭事件
+//     socket.addEventListener('close', (event) => {
+//       if (event.wasClean) {
+//         console.log(`WebSocket连接已关闭，状态码: ${event.code}，原因: ${event.reason}`);
+//       } else {
+//         console.log('WebSocket连接意外关闭');
+//       }
+
+//     });
+//
+// // 监听WebSocket发生错误事件
+//     socket.addEventListener('error', (error) => {
+//       console.error('WebSocket发生错误:', error);
+//     });
+
+  }; // 仅在组件挂载和卸载时执行一次
+
+
+
   const chatMethod = async (chat: string) => {
     if (chat === "") {
       errorEmpty()
     } else {
-      increaseChatState(chat,"")
+      increaseChatState(id,chat,"")
 
       let myUrl = await getChatWebsocketUrl();
       // 获取输入框中的内容
@@ -90,7 +149,7 @@ const ChatMethod = () => {
         //   increaseChatGPTState(result)
         //   setIsTrue(false)
         // }
-        increaseChatGPTState(result,"")
+        increaseChatGPTState(id,result,"")
         // 对话完成后socket会关闭，将聊天记录换行处理
       });
     }
@@ -104,7 +163,7 @@ const ChatMethod = () => {
     if (chat === "") {
       errorEmpty()
     } else {
-      increaseChatState(chat,"")
+      increaseChatState(id,chat,"")
 
       let myUrl = await getImageWebsocketUrl();
       // 获取输入框中的内容
@@ -177,14 +236,51 @@ const ChatMethod = () => {
         //   increaseChatGPTState(result)
         //   setIsTrue(false)
         // }
-        increaseChatGPTState(result,'')
+        increaseChatGPTState(id,result,'')
         // 对话完成后socket会关闭，将聊天记录换行处理
       });
     }
+  }
+
+  const testMethod = async () => {
+    let myUrl = await getTestUrl();
+    // 获取输入框中的内容
+    // 每次发送问题 都是一个新的websocket请求
+    let socket = new WebSocket(myUrl);
+    // 监听websocket的各阶段事件 并做相应处理
+    socket.addEventListener('open', () => {
+      // 发送消息
+      let params = {
+        header: {
+          "Sec-WebSocket-Version": 13,
+          "Sec-WebSocket-Key":"/cmERg3H91H79S5ejSsZtw==",
+          "Connection":"Upgrade",
+          "Upgrade":"websocket",
+          "Authorization":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZyIsInVzZXIiOnsiaWQiOiI2YWZlYzljNC02NmVmLTRkYzEtOTRlZC05OTQ0MWQzNDg0Y2IiLCJuaWNrbmFtZSI6bnVsbCwiYXZhdGFyIjpudWxsLCJ0eXBlcyI6Ik9SRElOQVJZIiwic3RhdHVzIjoiTk9STUFMIiwiZW1haWwiOiJsanpjb21lb25AZ21haWwuY29tIiwicGhvbmUiOm51bGwsImNyZWF0ZUF0IjoxNzE0NjM0ODQyNDkyLCJ1cGRhdGVBdCI6MTcxNDYzNDg0MjQ5MiwicGFzc3dvcmQiOiIkMmEkMTAkemg2aEJtZDZHM1dnTVpMOE5EUjZ1LnBEYmgzTUtvNDFISFpZMEhRR0Ivem5LMkprSklLWmEiLCJyZWdpc3RlclBhdHRlcm4iOiJFbWFpbCJ9LCJpYXQiOjE3MTQ2NDM2Nzh9.ylwe2Q1Fvnd05Ax5WmfaFBaFfliE4nmKk0muG3QG_Fw",
+          "User-Agent":"Apifox/1.0.0 (https://apifox.com)",
+          "Sec-WebSocket-Extensions": "permessage-deflate; client_max_window_bits",
+          "Host":"10.23.76.122:8000"
+        },
+        parameter: {
+
+        },
+        payload: {
+
+        }
+      };
+      socket.send(JSON.stringify(params));
+    })
+
+    socket.addEventListener('message', (event) => {
+      console.log("message")
+    });
+    socket.addEventListener('close', () => {
+      console.log("close")
+    });
 
   }
 
-  return {chatMethod,IllustratedText}
+  return {chatMethod,IllustratedText,testMethod,test}
 }
 
 export default ChatMethod

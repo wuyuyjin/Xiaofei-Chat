@@ -1,0 +1,1 @@
+export const rule = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9_]{6,20}$/

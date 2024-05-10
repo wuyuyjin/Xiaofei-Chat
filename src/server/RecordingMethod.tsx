@@ -157,6 +157,7 @@
 
 import SpeechRecognition, {useSpeechRecognition} from 'react-speech-recognition';
 import {useEffect} from "react";
+import {IconMicrophone, IconMicrophoneOff} from "@tabler/icons-react";
 
 const Dictaphone = ({dictaphoneMethod}: {dictaphoneMethod: any}) => {
   const {
@@ -187,15 +188,12 @@ const Dictaphone = ({dictaphoneMethod}: {dictaphoneMethod: any}) => {
     handleClick()
   }, [transcript]);
 
-
-
   return (
     <div>
-      {/*<p>Microphone: {listening ? 'on' : 'off'}</p>*/}
-      {/*<button onClick={startListening}>Start</button>*/}
-      {/*<button onClick={SpeechRecognition.stopListening}>Stop</button>*/}
-      <button onClick={() => start()}>{listening?"暂停":"开始"}</button>
-      <button className="ml-2" onClick={resetTranscript}>重录</button>
+      <button onClick={() => {
+        start()
+      }}>{listening?<IconMicrophone/>:<IconMicrophoneOff/>}</button>
+      {/*<button className="ml-2" onClick={resetTranscript}>重录</button>*/}
     </div>
   );
 };

@@ -52,7 +52,14 @@ const GetWebsocketUrl = () => {
     });
   };
 
-  return {getChatWebsocketUrl,getImageWebsocketUrl}
+  const getTestUrl = () => {
+    return new Promise<string>(resolve => {
+      const host = "ws://10.23.76.122:8000/ws/test/xioali/www"
+      resolve(host)
+    })
+  }
+
+  return {getChatWebsocketUrl,getImageWebsocketUrl,getTestUrl}
 }
 
 

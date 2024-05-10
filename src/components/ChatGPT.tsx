@@ -1,6 +1,8 @@
-import {getLocalTime} from "../store";
+import {getLocalTime} from "../store/chatStore";
 import {useEffect, useState} from "react";
 import OmsViewMarkdown from "./OmsViewMarkdown.tsx";
+import {PhotoProvider, PhotoView} from "react-photo-view";
+import 'react-photo-view/dist/react-photo-view.css';
 
 // chatGPT的聊天内容
 const ChatGPT = ({message, image}: { message: string, image: string }) => {
@@ -42,14 +44,17 @@ const ChatGPT = ({message, image}: { message: string, image: string }) => {
 
       {image ?
         <div className="chat-bubble min-w-{50%} break-words">
-          <img src={image}/>
+          <PhotoProvider>
+            <PhotoView src={`http://scft6edxu.hn-bkt.clouddn.com/${image}`} >
+              <img src={image} alt=""/>
+            </PhotoView>
+          </PhotoProvider>
           <OmsViewMarkdown textContent={outputString}/>
         </div> :
         <div className="chat-bubble min-w-{50%}  break-words">
           <OmsViewMarkdown textContent={outputString}/>
         </div>
       }
-
     </div>
   )
 }
