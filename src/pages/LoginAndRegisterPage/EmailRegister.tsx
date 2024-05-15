@@ -56,7 +56,6 @@ const EmailRegister = () => {
     const data = GetCodeApi(reqParams)
     console.log(data)
   }
-
   console.log(email)
   return (
 

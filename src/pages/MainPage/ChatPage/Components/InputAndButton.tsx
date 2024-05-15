@@ -9,9 +9,10 @@ import Dictaphone from "../../../../server/RecordingMethod.tsx";
 const InputAndButton = () => {
   const [chat, setChat] = useState("")
   const {errorEmpty} = Message()
-  const {chatMethod} = ChatMethod()
+  const {chatMethod,test} = ChatMethod()
   const {GetTuShengWenApi} = Api()
   const [file, setFile] = useState(null)
+
   // const increaseChatState = useChatStore.use.increaseChatState()
   // const [imageUrl, setImageUrl] = useState('');
 
@@ -60,9 +61,9 @@ const InputAndButton = () => {
           GetTuShengWenApi(formData)
           setFile(null)
         }else {
-          chatMethod(chat);
+          // chatMethod(chat);
           //测试
-          // test()
+          test(chat)
         }
         setChat("")
       }
@@ -82,9 +83,9 @@ const InputAndButton = () => {
           GetTuShengWenApi(formData)
           setFile(null)
         }else {
-          chatMethod(chat);
+          // chatMethod(chat);
           // 测试
-          // test()
+          test(chat)
         }
 
         setChat("")

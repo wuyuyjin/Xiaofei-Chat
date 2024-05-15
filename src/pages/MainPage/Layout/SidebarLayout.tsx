@@ -57,7 +57,7 @@ const SidebarLayout = () => {
         <div className="flex items-center justify-center flex-col">
           <div className="avatar">
             <div className="w-12 mask mask-squircle">
-              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"/>
+              <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"/>
             </div>
           </div>
           <button className="text-xs pb-4">体验用户</button>

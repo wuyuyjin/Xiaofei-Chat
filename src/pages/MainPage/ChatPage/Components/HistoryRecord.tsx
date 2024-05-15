@@ -11,6 +11,7 @@ const HistoryRecord = () => {
   const scrollContainerRef = useRef(null);
 
   const gptData = useChatStore.use.chatStoreState()
+  const deldata = useChatStore.use.delHistory()
   const navigate = useNavigate()
   useEffect(() => {
     const handleBottomScroll = () => {
@@ -19,12 +20,16 @@ const HistoryRecord = () => {
         console.log("Reached bottom! Trigger API request...");
       }
     };
-
     handleBottomScroll()
   }, [reachedBottom]);
   const selectGptMethod = (index:number) => {
     setSelectGpt(index);
   };
+
+  const delHistory = (id: string) => {
+    console.log(id)
+    deldata(id)
+  }
 
   const handleScroll = () => {
     const container = scrollContainerRef.current;
@@ -62,7 +67,9 @@ const HistoryRecord = () => {
               ) : (
                   <p className="">New Chat</p>
               )}
-              <IconCircleX size="20"/>
+              <div className="" onClick={() => delHistory(items.id)}>
+                <IconCircleX size="20"/>
+              </div>
             </div>
           </div>
         ))}

@@ -1,4 +1,3 @@
-import {IconSquareRoundedCheck} from "@tabler/icons-react";
 import {useState} from "react";
 import modalPath from "../../../../store/selectPath/modalPath.ts";
 
@@ -26,7 +25,8 @@ const SelectModel = () => {
                     key={item.key}
                     onClick={() => selectModal(index)}
                 >
-                    <p>{item.modalName}</p> {select === index ? <IconSquareRoundedCheck/> : ""}
+                    <p>{item.modalName}</p>
+                    {/*{select === index ? <IconSquareRoundedCheck/> : ""}*/}
                 </button>
             ))}
         </div>
