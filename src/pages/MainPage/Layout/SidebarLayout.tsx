@@ -18,9 +18,9 @@ const SidebarLayout = () => {
     {key: 0, icon: <IconHome/>, name: "首页", link: "/MainPage"},
     {key: 1, icon: <IconBook/>, name: "AI搜题", link: "AISearchQuestions"},
     {key: 2, icon: <IconMessageCircle/>, name: "chat", link: "ChatPage"},
-    {key: 3, icon: <IconHome/>, name: "首页", link: "4"},
-    {key: 4, icon: <IconHome/>, name: "首页", link: "5"},
-    {key: 5, icon: <IconHome/>, name: "首页", link: "6"},
+    // {key: 3, icon: <IconHome/>, name: "首页", link: "4"},
+    // {key: 4, icon: <IconHome/>, name: "首页", link: "5"},
+    // {key: 5, icon: <IconHome/>, name: "首页", link: "6"},
   ]
 
   const handleItemClick = (index: number, link: string) => {

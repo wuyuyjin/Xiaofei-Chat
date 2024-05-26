@@ -2,11 +2,26 @@ import {IconPlus} from "@tabler/icons-react";
 import "mac-scrollbar/dist/mac-scrollbar.css";
 import SelectModel from "./Components/SelectModel.tsx";
 import HistoryRecord from "./Components/HistoryRecord.tsx";
-import {Outlet} from "react-router";
-import {useChatStore} from "../../../store/chatStore";
+import {Outlet, useNavigate} from "react-router";
+import { useChatStore } from "../../../store/chatStore";
+import { v4 as uuid } from 'uuid';
+import ChatHistoryApi from "../../../Api/ChatHistoryApi/index.tsx";
+import { useEffect } from "react";
 
 const ChatPage = () => {
   const newChat = useChatStore.use.addNewChat()
+  const navigate = useNavigate()
+  const { getHistoryApi } = ChatHistoryApi()
+  useEffect(() => {
+    getHistoryApi()
+  },[])
+  let id = ""
+  const newChatMethod = () => {
+    id = uuid()
+    newChat(id)
+    navigate(id)
+  }
+  
   return (
     <div className="flex flex-row h-screen w-screen">
       <div className="card bg-base-100 shadow-xl">
@@ -14,7 +29,7 @@ const ChatPage = () => {
           <div className="card-title">LOGO</div>
           <div className="divider"></div>
           <div>
-            <button className="btn btn-wide btn-active btn-neutral" onClick={() => newChat()}>
+            <button className="btn btn-wide btn-active btn-neutral" onClick={() => newChatMethod()}>
               <IconPlus/>New chat
             </button>
           </div>

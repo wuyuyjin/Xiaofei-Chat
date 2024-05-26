@@ -4,8 +4,9 @@ import { useChatStore } from "../store/chatStore";
 import Message from "../components/message";
 import { useState } from "react";
 import { useParams } from "react-router";
-import { JSEncrypt } from "jsencrypt";
+// import { JSEncrypt } from "jsencrypt";
 import useTokenStore from "../store/TokenStore/index.ts";
+import { ChatUrl } from "./ChatUrl.ts";
 
 const ChatMethod = () => {
   const { getChatWebsocketUrl, getImageWebsocketUrl, getTestUrl } = GetWebsocketUrl()
@@ -23,10 +24,9 @@ const ChatMethod = () => {
   // 大模型回答的result
   let result: string = '';
 
-  const test = (chat: string) => {
+  const IFlytekChat = (chat: string) => {
     increaseChatState(id, chat, "")
     const userId = '6afec9c4-66ef-4dc1-94ed-99441d3484cb'; // 你随机设置的 userId
-    const token = "Bearer%20eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZyIsInVzZXIiOnsiaWQiOiI2YWZlYzljNC02NmVmLTRkYzEtOTRlZC05OTQ0MWQzNDg0Y2IiLCJuaWNrbmFtZSI6bnVsbCwiYXZhdGFyIjpudWxsLCJ0eXBlcyI6Ik9SRElOQVJZIiwic3RhdHVzIjoiTk9STUFMIiwiZW1haWwiOiJsanpjb21lb25AZ21haWwuY29tIiwicGhvbmUiOm51bGwsImNyZWF0ZUF0IjoxNzE0NjM0ODQyNDkyLCJ1cGRhdGVBdCI6MTcxNDYzNDg0MjQ5MiwicGFzc3dvcmQiOiIkMmEkMTAkemg2aEJtZDZHM1dnTVpMOE5EUjZ1LnBEYmgzTUtvNDFISFpZMEhRR0Ivem5LMkprSklLWmEiLCJyZWdpc3RlclBhdHRlcm4iOiJFbWFpbCJ9LCJpYXQiOjE3MTQ2NDM2Nzh9.ylwe2Q1Fvnd05Ax5WmfaFBaFfliE4nmKk0muG3QG_Fw"
     const topicld = ""
     // const publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCaC4O6xRgVS8jfe3/dPluxFrCHWLRaqgnBSAnpGjL3beSr6UjgG/VqQWqH8WItyFJhCkMzfBasFM2rqGiDJFi/lOz2lY8r+0gRnfEyQ3qEUkAKgSI1YUQ+8Ng0ff6Lx9oUScUHbFTX6/cpRF9xsWi17sD4KcWUkxqGl0Z2ApFG5wIDAQAB"
     // const JSE = new JSEncrypt()
@@ -39,7 +39,7 @@ const ChatMethod = () => {
     // WebSocket地址
     // const socketUrl = `ws://10.23.76.122:8000/ws/ai/iflyteks?Authorization=${token}&userId=${userId}&topicld=${topicld}`;
 
-    const socketUrl = `ws://10.23.76.122:8000/ws/ai/iflyteks?Authorization=${token}&userId=${userId}&topicId=`
+    const socketUrl = `${ChatUrl}/ws/ai/iflyteks?Authorization=${Authorization}&userId=${userId}&topicId=`
 
     // 创建WebSocket对象
     const socket = new WebSocket(socketUrl);
@@ -56,7 +56,7 @@ const ChatMethod = () => {
       console.log('接收到消息:', event.data);
       let data = JSON.parse(event.data);
       try {
-        
+
 
         if (data && data.content) {
           result += data.content; // 将收到的消息 content 拼接到 result 中
@@ -313,7 +313,7 @@ const ChatMethod = () => {
 
   }
 
-  return { chatMethod, IllustratedText, testMethod, test }
+  return { chatMethod, IllustratedText, testMethod, IFlytekChat }
 }
 
 export default ChatMethod

@@ -31,10 +31,7 @@ const PhoneLogin = () => {
       password: data.password,
       registerPattern: Direction.Phone
     }
-    console.log(reqParams)
-    const response = EmailAndLoginApi(reqParams)
-    console.log("res:"+response)
-    navigate("/MainPage")
+    EmailAndLoginApi(reqParams)
   })
 
   return (

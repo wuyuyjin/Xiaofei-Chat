@@ -7,7 +7,9 @@ const RegisterLayout = ({children}:{children: any}) => {
         <div className="card card-side bg-base-100 shadow-xl flex flex-wrap">
 
           <div className="card-body">
-            <div className="card-title">LOGO</div>
+            <div className="card-title">
+            
+            </div>
             {children}
           </div>
 

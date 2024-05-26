@@ -1,4 +1,4 @@
-import {IconBrandTelegram} from "@tabler/icons-react";
+import { IconBrandTelegram } from "@tabler/icons-react";
 import { useState } from "react";
 import Message from "./message";
 import ChatMethod from "../../../../server/ChatMethod.tsx";
@@ -8,9 +8,9 @@ import Dictaphone from "../../../../server/RecordingMethod.tsx";
 
 const InputAndButton = () => {
   const [chat, setChat] = useState("")
-  const {errorEmpty} = Message()
-  const {chatMethod,test} = ChatMethod()
-  const {GetTuShengWenApi} = Api()
+  const { errorEmpty } = Message()
+  const { IFlytekChat } = ChatMethod()
+  const { GetTuShengWenApi } = Api()
   const [file, setFile] = useState(null)
 
   // const increaseChatState = useChatStore.use.increaseChatState()
@@ -52,18 +52,18 @@ const InputAndButton = () => {
       if (chat === "") {
         errorEmpty()
       } else {
-        if (file){
+        if (file) {
           // increaseChatState(chat,imageUrl)
           const formData = new FormData();
           formData.append('file', file);
-          formData.append('chat',chat)
+          formData.append('chat', chat)
           //图像理解
           GetTuShengWenApi(formData)
           setFile(null)
-        }else {
+        } else {
           // chatMethod(chat);
-          //测试
-          test(chat)
+          //讯飞api
+          IFlytekChat(chat)
         }
         setChat("")
       }
@@ -71,26 +71,26 @@ const InputAndButton = () => {
   }
 
   const handleSubmit = (chat: string) => {
-      if (chat === "") {
-        errorEmpty()
+    if (chat === "") {
+      errorEmpty()
+    } else {
+      if (file) {
+        // increaseChatState(chat,imageUrl)
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('chat', chat)
+        //图像理解
+        GetTuShengWenApi(formData)
+        setFile(null)
       } else {
-        if (file){
-          // increaseChatState(chat,imageUrl)
-          const formData = new FormData();
-          formData.append('file', file);
-          formData.append('chat',chat)
-          //图像理解
-          GetTuShengWenApi(formData)
-          setFile(null)
-        }else {
-          // chatMethod(chat);
-          // 测试
-          test(chat)
-        }
-
-        setChat("")
+        // chatMethod(chat);
+        // 讯飞api
+        IFlytekChat(chat)
       }
+
+      setChat("")
     }
+  }
 
 
 
@@ -115,16 +115,16 @@ const InputAndButton = () => {
       {/*  <IconCamera/>*/}
       {/*</button>*/}
       <button className="btn btn-neutral join-item">
-        <Dictaphone dictaphoneMethod={dictaphoneMethod}/>
+        <Dictaphone dictaphoneMethod={dictaphoneMethod} />
       </button>
       <input type="text" placeholder="Send a message"
-             value={chat}
-             onChange={e => setChat(e.target.value)}
-             onKeyDown={handleKeyDown}
-             className="input input-bordered input-md join-item w-8/12 drop-shadow-2xl"/>
+        value={chat}
+        onChange={e => setChat(e.target.value)}
+        onKeyDown={handleKeyDown}
+        className="input input-bordered input-md join-item w-8/12 drop-shadow-2xl" />
 
       <button className="btn btn-active btn-neutral btn-md self-end join-item"
-              onClick={() => handleSubmit(chat)}><IconBrandTelegram/>
+        onClick={() => handleSubmit(chat)}><IconBrandTelegram />
       </button>
 
     </div>

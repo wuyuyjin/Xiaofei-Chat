@@ -1,4 +1,4 @@
 export enum Direction {
-  "Email",
-  "Phone"
+  Email = "Email",
+  Phone = "Phone"
 }

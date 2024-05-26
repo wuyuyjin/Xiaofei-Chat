@@ -5,7 +5,7 @@ const LoginLayout = ({children}:{children: any}) => {
         <div className="card bg-base-100 shadow-xl">
           <div className="flex flex-wrap">
             <div className="card-body">
-              <div className="card-title">LOGO</div>
+              <div className="card-title"></div>
               {children}
             </div>
             <div className="card-body bg-[#082fb6]">

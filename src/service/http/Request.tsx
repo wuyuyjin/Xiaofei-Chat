@@ -1,22 +1,25 @@
-import axios from 'axios';
-import {useNavigate} from "react-router-dom";
+import axios, { AxiosRequestConfig } from 'axios';
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import useTokenStore from '../../store/TokenStore';
 
 
 const Instance = () => {
   const navigate = useNavigate()
   // const {token} = useToken()
+  const token = useTokenStore.use.token()
   const service = axios.create({
     // baseURL: 'https://mock.apifox.com/m1/4399114-4043653-default/',  // 你的API地址
-    baseURL: "https://10.23.76.122:8000",
-    timeout: 5000,  // 请求超时时间
+    // baseURL: "http://10.23.76.122:8000",
+    baseURL: "http://xiaoli.chat:8000",
+    timeout: 10000,  // 请求超时时间
   });
 
-// 请求拦截器
+  // 请求拦截器
   service.interceptors.request.use(
     config => {
       // 在发送请求之前做些什么：例如添加token
-      config.headers.Authorization = `Bearer token`
+      // config.headers.Authorization = `${token}`
       return config;
     },
     error => {
@@ -25,67 +28,15 @@ const Instance = () => {
     }
   );
 
-// 响应拦截器
+  // 响应拦截器
   service.interceptors.response.use(
     response => {
       // 对响应数据做点什么
       const res = response.data;
+
       // 根据你的业务处理回调
-      if (res.code !== 200) {
-        // 处理错误
-        // ...
-
-        switch (res.code) {
-          case 202:
-            toast.success('Successfully toasted!')
-            break;
-
-          case 400:
-
-            break;
-          case 401:
-            // token过期就会跳转到这
-            toast.error("This didn't work.")
-            navigate("")
-            break;
-
-          case 403:
-            toast.error("This didn't work.")
-            break;
-
-          case 404:
-            toast.error("This didn't work.")
-            break;
-
-          case 408:
-            toast.error("This didn't work.")
-            break;
-
-          case 500:
-            toast.error("This didn't work.")
-            break;
-
-          case 501:
-            toast.error("This didn't work.")
-            break;
-
-          case 502:
-            toast.error("This didn't work.")
-            break;
-
-          case 503:
-            toast.error("This didn't work.")
-            break;
-
-          case 504:
-            toast.error("This didn't work.")
-            break;
-
-          case 505:
-            toast.error("This didn't work.")
-            break;
-          default:
-        }
+      if (res.code !== 1) {
+        toast.error(`${res.msg}`)
         return Promise.reject(new Error(res.message || 'Error'));
       } else {
         return res;
@@ -98,7 +49,7 @@ const Instance = () => {
     }
   );
 
-  // const http = {
+  // const httpService = {
   //   post<T = any>(url: string, data?: object, config?: AxiosRequestConfig): Promise<T>{
   //     return service.post(url,data,config)
   //   },
@@ -113,7 +64,7 @@ const Instance = () => {
   //   }
   // }
 
-  return {service}
+  return { service }
 }
 
 export default Instance;

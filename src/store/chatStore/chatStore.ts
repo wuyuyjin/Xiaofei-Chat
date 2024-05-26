@@ -23,7 +23,7 @@ interface chatHistoryStoreType {
 
 interface chatState {
   chatStoreState: chatHistoryStoreType[]
-  addNewChat: () => void
+  addNewChat: (id: string) => void
   increaseChatState: (id: string | undefined, message: string, image: string) => void
   increaseChatGPTState: (id: string | undefined, message: string, image: string) => void
   delHistory: (id: string) => void
@@ -36,9 +36,9 @@ const useChatStore = createSelectors(create<chatState>()(immer(devtools(persist(
       // {id: uuid(), historyStore: [{type: chat.Ai, id: uuid(), message: "欢迎使用小飞AI！", image: ""}]}
     ],
 
-    addNewChat: () => set((state) => ({
+    addNewChat: (id) => set((state) => ({
       chatStoreState: [...state.chatStoreState, {
-        id: uuid(),
+        id: id,
         historyStore: [
           {type: chat.Ai, id: uuid(), message: "欢迎使用小飞AI!", image: ""}
         ]
