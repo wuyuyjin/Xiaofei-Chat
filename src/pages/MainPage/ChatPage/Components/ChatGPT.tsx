@@ -32,50 +32,54 @@ const ChatGPT = ({ message, image }: { message: string, image: string }) => {
 
   return (
     <div className="">
-      {image ?
-        <div>
-          <PhotoProvider>
-            <PhotoView src={`http://scft6edxu.hn-bkt.clouddn.com/${image}`}>
-              <img src={image} alt="未加载" />
-            </PhotoView>
-          </PhotoProvider>
-          <OmsViewMarkdown textContent={outputString} />
-        </div> :
-        <div className="">
-          <div className="card lg:min-w-[600px] md:w-96 bg-base-100 shadow-xl">
-            <div className="card-body flex flex-row justify-between">
-              <div className="flex flex-row">
-                {/*头像*/}
-                <div className="avatar items-start">
-                  <div className="w-10 mask mask-squircle">
-                    <img
-                      src={logo} />
-                  </div>
+
+      <div className="">
+        <div className="card lg:min-w-[600px] md:w-96 bg-base-100 shadow-xl">
+          <div className="card-body flex flex-row justify-between">
+            <div className="flex flex-row">
+              {/*头像*/}
+              <div className="avatar items-start">
+                <div className="w-10 mask mask-squircle">
+                  <img
+                    src={logo} />
                 </div>
-                <div className="flex-col ml-4">
-                  <p className="join">
-                    <p className="join-item">You</p>
-                    <p className="join-item text-sm text-gray-400 p-1">·16m</p>
-                  </p>
+              </div>
+              <div className="flex-col ml-4">
+                <p className="join">
+                  <p className="join-item">You</p>
+                  <p className="join-item text-sm text-gray-400 p-1">·16m</p>
+                </p>
+
+                {image ?
+
+                  <div>
+                    <PhotoProvider>
+                      <PhotoView src={`http://secocnc09.hn-bkt.clouddn.com/${image}`}>
+                        <img src={`http://secocnc09.hn-bkt.clouddn.com/${image}`} alt="未加载" />
+                      </PhotoView>
+                    </PhotoProvider>
+                    <OmsViewMarkdown textContent={outputString} />
+                  </div> :
+
                   <div className="w-96">
                     <OmsViewMarkdown textContent={outputString} />
                   </div>
-                </div>
 
+                }
               </div>
-              <div className="join">
-                <button className="join-item btn btn-square btn-sm btn-ghost">
-                  <IconThumbUp />
-                </button>
-                <button className="join-item btn btn-square btn-sm btn-ghost">
-                  <IconThumbDown />
-                </button>
-              </div>
+
+            </div>
+            <div className="join">
+              <button className="join-item btn btn-square btn-sm btn-ghost">
+                <IconThumbUp />
+              </button>
+              <button className="join-item btn btn-square btn-sm btn-ghost">
+                <IconThumbDown />
+              </button>
             </div>
           </div>
         </div>
-      }
-
+      </div>
     </div>
   )
 }

@@ -46,7 +46,7 @@ const ChatGPT = ({message, image}: { message: string, image: string }) => {
         <div className="chat-bubble min-w-{50%} break-words">
           <PhotoProvider>
             <PhotoView src={`http://scft6edxu.hn-bkt.clouddn.com/${image}`} >
-              <img src={image} alt=""/>
+              <img src={image} alt="未加载"/>
             </PhotoView>
           </PhotoProvider>
           <OmsViewMarkdown textContent={outputString}/>

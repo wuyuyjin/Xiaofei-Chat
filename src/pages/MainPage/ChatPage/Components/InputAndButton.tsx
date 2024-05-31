@@ -12,7 +12,7 @@ const InputAndButton = () => {
   const [chat, setChat] = useState("")
   const { errorEmpty } = Message()
   const { IFlytekChat } = ChatMethod()
-  const { GetTuShengWenApi } = Api()
+  const { GetTuShengWenApi, GetWenShengTu } = Api()
   const [file, setFile] = useState(null)
   const { id } = useParams()
 
@@ -65,8 +65,13 @@ const InputAndButton = () => {
           setFile(null)
         } else {
           // chatMethod(chat);
-          //讯飞api
-          IFlytekChat(chat)
+          if (chat.includes("/Imagine")) {
+            increaseChatState(id, chat, "")
+            GetWenShengTu(chat)
+          } else {
+            // 讯飞api
+            IFlytekChat(chat)
+          }
         }
         setChat("")
       }
@@ -78,7 +83,7 @@ const InputAndButton = () => {
       errorEmpty()
     } else {
       if (file) {
-        // increaseChatState(chat,imageUrl)
+        increaseChatState(id, chat, imageUrl)
         const formData = new FormData();
         formData.append('file', file);
         formData.append('chat', chat)
@@ -87,8 +92,13 @@ const InputAndButton = () => {
         setFile(null)
       } else {
         // chatMethod(chat);
-        // 讯飞api
-        IFlytekChat(chat)
+        if (chat.includes("/Imagine")) {
+          GetWenShengTu(chat)
+        } else {
+          // 讯飞api
+          IFlytekChat(chat)
+        }
+
       }
 
       setChat("")
