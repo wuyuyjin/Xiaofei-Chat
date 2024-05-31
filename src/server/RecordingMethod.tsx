@@ -193,7 +193,7 @@ const Dictaphone = ({dictaphoneMethod}: {dictaphoneMethod: any}) => {
       <button onClick={() => {
         start()
       }}>{listening?<IconMicrophone/>:<IconMicrophoneOff/>}</button>
-      {/*<button className="ml-2" onClick={resetTranscript}>重录</button>*/}
+      <button className="ml-4" onClick={resetTranscript}>重录</button>
     </div>
   );
 };

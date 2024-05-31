@@ -53,7 +53,6 @@ const ChatMethod = () => {
 
     // 监听WebSocket接收到消息事件
     socket.addEventListener('message', (event) => {
-      console.log('接收到消息:', event.data);
       let data = JSON.parse(event.data);
       try {
 

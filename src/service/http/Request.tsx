@@ -10,8 +10,8 @@ const Instance = () => {
   const token = useTokenStore.use.token()
   const service = axios.create({
     // baseURL: 'https://mock.apifox.com/m1/4399114-4043653-default/',  // 你的API地址
-    // baseURL: "http://10.23.76.122:8000",
-    baseURL: "http://xiaoli.chat:8000",
+    baseURL: "http://10.23.45.94:8000",
+    // baseURL: "http://xiaoli.chat:8000",
     timeout: 10000,  // 请求超时时间
   });
 

@@ -21,28 +21,30 @@ const MyChat = ({ message, image }: { message: string, image: string }) => {
             <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="Avatar" />
           </div>
         </div>
-        {image ? (
-          <div>
-            <PhotoProvider>
-              <PhotoView src={image}>
-                <img src={image} alt="Chat Image" height={500} width={500} />
-              </PhotoView>
-            </PhotoProvider>
-            <div ref={chatContainerRef} className="lg:w-[500px] md:w-96 break-words">
-              {message}
+
+        <div className="flex-col ml-4">
+          <p className="join">
+            <p className="join-item">Me</p>
+            <p className="join-item text-sm text-gray-400 p-1">·16m</p>
+          </p>
+          {image ? (
+            <div>
+              <PhotoProvider>
+                <PhotoView src={image}>
+                  <img src={image} alt="Chat Image" height={500} width={500} />
+                </PhotoView>
+              </PhotoProvider>
+              <div ref={chatContainerRef} className="lg:w-[500px] md:w-96 break-words">
+                {message}
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className="flex-col ml-4">
-            <p className="join">
-              <p className="join-item">Me</p>
-              <p className="join-item text-sm text-gray-400 p-1">·16m</p>
-            </p>
+          ) : (
             <div ref={chatContainerRef} className="lg:w-[500px] break-words">
               {message}
             </div>
-          </div>
-        )}
+
+          )}
+        </div>
       </div>
       <div>
         <button className="btn btn-ghost btn-sm"><IconEdit /></button>

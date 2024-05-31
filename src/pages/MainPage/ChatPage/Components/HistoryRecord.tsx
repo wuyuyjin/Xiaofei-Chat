@@ -3,6 +3,7 @@ import {IconCircleX, IconMessage} from "@tabler/icons-react";
 import {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useChatStore} from "../../../../store/chatStore";
+import toast from "react-hot-toast";
 
 // 历史记录
 const HistoryRecord = () => {
@@ -26,9 +27,10 @@ const HistoryRecord = () => {
     setSelectGpt(index);
   };
 
+  // 删除某一历史记录
   const delHistory = (id: string) => {
-    console.log(id)
     deldata(id)
+    toast.success("删除成功")
   }
 
   const handleScroll = () => {

@@ -1,10 +1,12 @@
-import { IconBrandTelegram } from "@tabler/icons-react";
+import { IconBrandTelegram, IconCamera, IconMicrophone, IconPhoto, IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import Message from "./message";
 import ChatMethod from "../../../../server/ChatMethod.tsx";
 import Api from "../../../../Api/test";
 // import {useChatStore} from "../../../../store/chatStore";
 import Dictaphone from "../../../../server/RecordingMethod.tsx";
+import useChatStore from "../../../../store/chatStore/chatStore.ts";
+import { useParams } from "react-router";
 
 const InputAndButton = () => {
   const [chat, setChat] = useState("")
@@ -12,9 +14,10 @@ const InputAndButton = () => {
   const { IFlytekChat } = ChatMethod()
   const { GetTuShengWenApi } = Api()
   const [file, setFile] = useState(null)
+  const { id } = useParams()
 
-  // const increaseChatState = useChatStore.use.increaseChatState()
-  // const [imageUrl, setImageUrl] = useState('');
+  const increaseChatState = useChatStore.use.increaseChatState()
+  const [imageUrl, setImageUrl] = useState('');
 
 
   // 图片转换base64
@@ -35,17 +38,17 @@ const InputAndButton = () => {
   //   }
   // };
 
-  // const handleFileChange = (event: any) => {
-  //   const file = event.target.files[0]
-  //   const imageUrl = URL.createObjectURL(file);
-  //   console.log('imageUrl:'+imageUrl)
-  //
-  //   // const fileName = file.name
-  //   // console.log("fileName:"+fileName)
-  //   // setImageUrl(`http://scft6edxu.hn-bkt.clouddn.com/${fileName}`);
-  //   setImageUrl(imageUrl)
-  //   setFile(file);
-  // };
+  const handleFileChange = (event: any) => {
+    const file = event.target.files[0]
+    const imageUrl = URL.createObjectURL(file);
+    console.log('imageUrl:' + imageUrl)
+
+    // const fileName = file.name
+    // console.log("fileName:"+fileName)
+    // setImageUrl(`http://scft6edxu.hn-bkt.clouddn.com/${fileName}`);
+    setImageUrl(imageUrl)
+    setFile(file);
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -53,7 +56,7 @@ const InputAndButton = () => {
         errorEmpty()
       } else {
         if (file) {
-          // increaseChatState(chat,imageUrl)
+          increaseChatState(id, chat, imageUrl)
           const formData = new FormData();
           formData.append('file', file);
           formData.append('chat', chat)
@@ -100,23 +103,31 @@ const InputAndButton = () => {
 
   return (
     <div className="flex items-stretch justify-center join">
-      {/*<div className="dropdown dropdown-hover dropdown-top">*/}
-      {/*  <div tabIndex={0} role="button" className="btn btn-active btn-neutral btn-md self-end join-item"><IconPlus/>*/}
-      {/*  </div>*/}
-      {/*  <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-[#2A4365] rounded-box w-52">*/}
-      {/*    <li><a><IconPhoto/>*/}
-      {/*      <input type="file" accept="image/png,image/jpeg,image/gif,image/jpg" onChange={handleFileChange}/>*/}
-      {/*    </a></li>*/}
-      {/*    <li><a><IconMicrophone/><Dictaphone dictaphoneMethod={dictaphoneMethod}/></a></li>*/}
-      {/*  </ul>*/}
-      {/*</div>*/}
+      <div className="dropdown dropdown-hover dropdown-top">
+        <div tabIndex={0} role="button" className="btn btn-active btn-neutral btn-md self-end join-item"><IconPlus />
+        </div>
+        <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow rounded-box w-52">
+          <li>
+            <a>
+              <IconPhoto />
+              <input type="file" accept="image/png,image/jpeg,image/gif,image/jpg" onChange={handleFileChange} />
+            </a>
+          </li>
+          <li>
+            <a>
+              {/* <IconMicrophone /> */}
+              <Dictaphone dictaphoneMethod={dictaphoneMethod} />
+            </a>
+          </li>
+        </ul>
+      </div>
 
-      {/*<button className="btn btn-neutral join-item">*/}
-      {/*  <IconCamera/>*/}
-      {/*</button>*/}
-      <button className="btn btn-neutral join-item">
+      {/* <button className="btn btn-neutral join-item">
+       <IconCamera/>
+      </button> */}
+      {/* <button className="btn btn-neutral join-item">
         <Dictaphone dictaphoneMethod={dictaphoneMethod} />
-      </button>
+      </button> */}
       <input type="text" placeholder="Send a message"
         value={chat}
         onChange={e => setChat(e.target.value)}
