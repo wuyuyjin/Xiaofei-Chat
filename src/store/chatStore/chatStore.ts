@@ -1,8 +1,8 @@
-import {create} from 'zustand'
-import {createSelectors} from "../../utils";
-import {immer} from "zustand/middleware/immer";
-import {createJSONStorage, devtools, persist} from "zustand/middleware";
-import {v4 as uuid} from 'uuid';
+import { create } from 'zustand'
+import { createSelectors } from "../../utils";
+import { immer } from "zustand/middleware/immer";
+import { createJSONStorage, devtools, persist } from "zustand/middleware";
+import { v4 as uuid } from 'uuid';
 
 export enum chat {
   Ai,
@@ -22,6 +22,10 @@ interface chatHistoryStoreType {
 }
 
 interface chatState {
+  chat: string,
+  changeChat: (chat: string) => void
+  imageUrl: string
+  changeImageUrl: (imageUrl: string) => void
   chatStoreState: chatHistoryStoreType[]
   addNewChat: (id: string) => void
   increaseChatState: (id: string | undefined, message: string, image: string) => void
@@ -31,80 +35,92 @@ interface chatState {
 
 const useChatStore = createSelectors(create<chatState>()(immer(devtools(persist((set) => ({
 
-    // AI是ChatGPT
-    chatStoreState: [
-      // {id: uuid(), historyStore: [{type: chat.Ai, id: uuid(), message: "欢迎使用小飞AI！", image: ""}]}
-    ],
+  chat: "",
 
-    addNewChat: (id) => set((state) => ({
-      chatStoreState: [...state.chatStoreState, {
-        id: id,
-        historyStore: [
-          {type: chat.Ai, id: uuid(), message: "欢迎使用小飞AI!", image: ""}
-        ]
-      }]
-    })),
+  changeChat: (chat) => set(() => ({
+    chat: chat
+  })),
 
-    // 用户聊天记录
-    increaseChatState: (id, message, image) => set((state) => {
-      const updatedState = state.chatStoreState.map(item => {
-        if (item.id === id) {
-          return {
-            ...item,
-            historyStore: [
-              ...item.historyStore,
-              {
-                type: chat.Me,
-                id: uuid(),
-                message: message,
-                image: image
-              }
-            ]
-          };
-        }
-        return item;
-      });
+  imageUrl: "",
 
-      return {chatStoreState: updatedState};
-    }),
+  changeImageUrl: (imageUrl) => set(() => ({
+    imageUrl: imageUrl
+  })),
 
-    // gpt聊天记录
-    increaseChatGPTState: (id, message, image) => set((state) => {
-      const updatedState = state.chatStoreState.map(item => {
-        if (item.id === id) {
-          return {
-            ...item,
-            historyStore: [
-              ...item.historyStore,
-              {
-                type: chat.Ai,
-                id: uuid(),
-                message: message,
-                image: image
-              }
-            ]
-          };
-        }
-        return item;
-      });
+  // AI是ChatGPT
+  chatStoreState: [
+    // {id: uuid(), historyStore: [{type: chat.Ai, id: uuid(), message: "欢迎使用小飞AI！", image: ""}]}
+  ],
 
-      return {chatStoreState: updatedState};
-    }),
+  addNewChat: (id) => set((state) => ({
+    chatStoreState: [...state.chatStoreState, {
+      id: id,
+      historyStore: [
+        { type: chat.Ai, id: uuid(), message: "欢迎使用小飞AI!", image: "" }
+      ]
+    }]
+  })),
+
+  // 用户聊天记录
+  increaseChatState: (id, message, image) => set((state) => {
+    const updatedState = state.chatStoreState.map(item => {
+      if (item.id === id) {
+        return {
+          ...item,
+          historyStore: [
+            ...item.historyStore,
+            {
+              type: chat.Me,
+              id: uuid(),
+              message: message,
+              image: image
+            }
+          ]
+        };
+      }
+      return item;
+    });
+
+    return { chatStoreState: updatedState };
+  }),
+
+  // gpt聊天记录
+  increaseChatGPTState: (id, message, image) => set((state) => {
+    const updatedState = state.chatStoreState.map(item => {
+      if (item.id === id) {
+        return {
+          ...item,
+          historyStore: [
+            ...item.historyStore,
+            {
+              type: chat.Ai,
+              id: uuid(),
+              message: message,
+              image: image
+            }
+          ]
+        };
+      }
+      return item;
+    });
+
+    return { chatStoreState: updatedState };
+  }),
 
   delHistory: (id) => set((state) => ({
     chatStoreState: state.chatStoreState.filter((item) => item.id !== id)
   })),
 
-  }), {
-    name: "chatStore",
-    storage: createJSONStorage(() => localStorage),
-    partialize: (state) =>
-      Object.fromEntries(
-        Object.entries(state).filter(
-          ([key]) => ['chatStoreState'].includes(key)
-        )
+}), {
+  name: "chatStore",
+  storage: createJSONStorage(() => localStorage),
+  partialize: (state) =>
+    Object.fromEntries(
+      Object.entries(state).filter(
+        ([key]) => ['chatStoreState'].includes(key)
       )
-  }
+    )
+}
 ), {
   name: "chatStore",
   enabled: true

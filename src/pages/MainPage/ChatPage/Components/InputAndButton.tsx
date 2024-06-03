@@ -12,10 +12,12 @@ const InputAndButton = () => {
   const [chat, setChat] = useState("")
   const { errorEmpty } = Message()
   const { IFlytekChat } = ChatMethod()
-  const { GetTuShengWenApi, GetWenShengTu } = Api()
+  const { GetTuShengWenApi, GetWenShengTu, Getshibiewenzi } = Api()
   const [file, setFile] = useState(null)
   const { id } = useParams()
 
+  const getChat = useChatStore.use.changeChat()
+  const getImageUrl = useChatStore.use.changeImageUrl()
   const increaseChatState = useChatStore.use.increaseChatState()
   const [imageUrl, setImageUrl] = useState('');
 
@@ -41,8 +43,7 @@ const InputAndButton = () => {
   const handleFileChange = (event: any) => {
     const file = event.target.files[0]
     const imageUrl = URL.createObjectURL(file);
-    console.log('imageUrl:' + imageUrl)
-
+    getImageUrl(imageUrl)
     // const fileName = file.name
     // console.log("fileName:"+fileName)
     // setImageUrl(`http://scft6edxu.hn-bkt.clouddn.com/${fileName}`);
@@ -56,13 +57,21 @@ const InputAndButton = () => {
         errorEmpty()
       } else {
         if (file) {
-          increaseChatState(id, chat, imageUrl)
-          const formData = new FormData();
-          formData.append('file', file);
-          formData.append('chat', chat)
-          //图像理解
-          GetTuShengWenApi(formData)
-          setFile(null)
+          if (chat.includes("/task")) {
+            const formData = new FormData();
+            formData.append('file', file)
+            getChat(chat)
+            Getshibiewenzi(formData)
+            setFile(null)
+          } else {
+            increaseChatState(id, chat, imageUrl)
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('chat', chat)
+            //图像理解
+            GetTuShengWenApi(formData)
+            setFile(null)
+          }
         } else {
           // chatMethod(chat);
           if (chat.includes("/Imagine")) {
@@ -83,24 +92,31 @@ const InputAndButton = () => {
       errorEmpty()
     } else {
       if (file) {
-        increaseChatState(id, chat, imageUrl)
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('chat', chat)
-        //图像理解
-        GetTuShengWenApi(formData)
-        setFile(null)
+        if (chat.includes("/task")) {
+          const formData = new FormData();
+          formData.append('file', file)
+          getChat(chat)
+          Getshibiewenzi(formData)
+          setFile(null)
+        } else {
+          increaseChatState(id, chat, imageUrl)
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('chat', chat)
+          //图像理解
+          GetTuShengWenApi(formData)
+          setFile(null)
+        }
       } else {
         // chatMethod(chat);
         if (chat.includes("/Imagine")) {
+          increaseChatState(id, chat, "")
           GetWenShengTu(chat)
         } else {
           // 讯飞api
           IFlytekChat(chat)
         }
-
       }
-
       setChat("")
     }
   }
@@ -117,6 +133,7 @@ const InputAndButton = () => {
         <div tabIndex={0} role="button" className="btn btn-active btn-neutral btn-md self-end join-item"><IconPlus />
         </div>
         <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow rounded-box w-52">
+
           <li>
             <a>
               <IconPhoto />
@@ -138,7 +155,7 @@ const InputAndButton = () => {
       {/* <button className="btn btn-neutral join-item">
         <Dictaphone dictaphoneMethod={dictaphoneMethod} />
       </button> */}
-      <input type="text" placeholder="Send a message"
+      <input type="text" placeholder="尝试 /Imagine 生成图片 /task AI解题"
         value={chat}
         onChange={e => setChat(e.target.value)}
         onKeyDown={handleKeyDown}

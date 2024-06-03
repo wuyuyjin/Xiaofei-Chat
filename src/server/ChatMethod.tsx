@@ -15,6 +15,8 @@ const ChatMethod = () => {
   const Authorization = useTokenStore.use.token()
   // const increaseChatState = useChatTestStore.use.increaseChatState()
   // const increaseChatGPTState = useChatTestStore.use.increaseChatGPTState()
+  const imageUrl = useChatStore.use.imageUrl()
+  const changeImageUrl = useChatStore.use.changeImageUrl()
   const { id } = useParams()
   const { errorEmpty } = Message()
   const [historyMessage, setHistoryMessage] = useState<any[]>([
@@ -25,7 +27,12 @@ const ChatMethod = () => {
   let result: string = '';
 
   const IFlytekChat = (chat: string) => {
-    increaseChatState(id, chat, "")
+    console.log("akjdlfalsjkdfsa");
+    console.log("iamge:"+imageUrl);
+    console.log(11212);
+    
+    
+    increaseChatState(id, chat, imageUrl)
     const userId = '6afec9c4-66ef-4dc1-94ed-99441d3484cb'; // 你随机设置的 userId
     const topicld = ""
     // const publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCaC4O6xRgVS8jfe3/dPluxFrCHWLRaqgnBSAnpGjL3beSr6UjgG/VqQWqH8WItyFJhCkMzfBasFM2rqGiDJFi/lOz2lY8r+0gRnfEyQ3qEUkAKgSI1YUQ+8Ng0ff6Lx9oUScUHbFTX6/cpRF9xsWi17sD4KcWUkxqGl0Z2ApFG5wIDAQAB"
