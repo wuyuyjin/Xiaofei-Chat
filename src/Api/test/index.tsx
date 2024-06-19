@@ -34,13 +34,14 @@ const Api = () => {
   }
 
   const Getshibiewenzi = (formData: any) => {
-
     axios.post(`${url}/wenzishibie`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     }).then(res => {
       console.log(res)
+      console.log("chat:"+chat);
+      
       if (res.data.message) {
         const data = `${res.data.message}。${chat}`
 

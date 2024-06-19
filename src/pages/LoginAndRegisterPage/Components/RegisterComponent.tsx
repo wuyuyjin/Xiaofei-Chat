@@ -15,7 +15,7 @@ const RegisterComponent = () => {
       </div>
 
       <div>
-        <p className="font-bold text-2xl">欢迎使用AI+</p>
+        <p className="font-bold text-2xl">欢迎使用AI</p>
       </div>
 
       <div className="space-y-2">
@@ -26,7 +26,7 @@ const RegisterComponent = () => {
       </div>
 
       <div className="space-y-4">
-        <p className="text-xs font-thin">欢迎加入我们的AI+团队</p>
+        <p className="text-xs font-thin">欢迎加入我们的AI团队</p>
         <div className="text-sm space-x-0"><p>是否存在账号？</p><a className="link link-hover text-[#4e81f5]" onClick={() => navigate("/EmailLogin")}>请登录</a></div>
       </div>
     </div>

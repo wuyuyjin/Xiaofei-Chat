@@ -16,6 +16,7 @@ const ChatMethod = () => {
   // const increaseChatState = useChatTestStore.use.increaseChatState()
   // const increaseChatGPTState = useChatTestStore.use.increaseChatGPTState()
   const imageUrl = useChatStore.use.imageUrl()
+  const newchat = useChatStore.use.chat()
   const changeImageUrl = useChatStore.use.changeImageUrl()
   const { id } = useParams()
   const { errorEmpty } = Message()
@@ -28,7 +29,9 @@ const ChatMethod = () => {
 
   const IFlytekChat = (chat: string) => {
     console.log("akjdlfalsjkdfsa");
-    console.log("iamge:"+imageUrl);
+    console.log("iamge:" + imageUrl);
+    console.log("chat:"+newchat);
+    
     console.log(11212);
     
     

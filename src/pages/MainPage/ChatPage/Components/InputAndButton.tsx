@@ -62,15 +62,13 @@ const InputAndButton = () => {
             formData.append('file', file)
             getChat(chat)
             Getshibiewenzi(formData)
-            setFile(null)
-          } else {
+          } else if (chat.includes("/describe")) {
             increaseChatState(id, chat, imageUrl)
             const formData = new FormData();
             formData.append('file', file);
             formData.append('chat', chat)
             //图像理解
             GetTuShengWenApi(formData)
-            setFile(null)
           }
         } else {
           // chatMethod(chat);
@@ -83,6 +81,8 @@ const InputAndButton = () => {
           }
         }
         setChat("")
+        setFile(null)
+
       }
     }
   }
@@ -97,15 +97,13 @@ const InputAndButton = () => {
           formData.append('file', file)
           getChat(chat)
           Getshibiewenzi(formData)
-          setFile(null)
-        } else {
+        } else if (chat.includes("/describe")) {
           increaseChatState(id, chat, imageUrl)
           const formData = new FormData();
           formData.append('file', file);
           formData.append('chat', chat)
           //图像理解
           GetTuShengWenApi(formData)
-          setFile(null)
         }
       } else {
         // chatMethod(chat);
@@ -118,9 +116,10 @@ const InputAndButton = () => {
         }
       }
       setChat("")
+      setFile(null)
+
     }
   }
-
 
 
   const dictaphoneMethod = (newValue: string) => {
@@ -155,7 +154,7 @@ const InputAndButton = () => {
       {/* <button className="btn btn-neutral join-item">
         <Dictaphone dictaphoneMethod={dictaphoneMethod} />
       </button> */}
-      <input type="text" placeholder="尝试 /Imagine 生成图片 /task AI解题"
+      <input type="text" placeholder="尝试 /Imagine 生成图片 /task AI解题 /describe 给张图尝试让它描述一下"
         value={chat}
         onChange={e => setChat(e.target.value)}
         onKeyDown={handleKeyDown}

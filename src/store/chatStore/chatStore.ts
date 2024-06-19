@@ -56,7 +56,7 @@ const useChatStore = createSelectors(create<chatState>()(immer(devtools(persist(
     chatStoreState: [...state.chatStoreState, {
       id: id,
       historyStore: [
-        { type: chat.Ai, id: uuid(), message: "欢迎使用小飞AI!", image: "" }
+        { type: chat.Ai, id: uuid(), message: "欢迎使用AI智慧助手!", image: "" }
       ]
     }]
   })),
